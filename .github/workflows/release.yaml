@@ -36,14 +36,6 @@ jobs:
             - goarch: "386"
               goos: darwin
     steps:
-    - uses: actions/checkout@v2
-    - uses: wangyoucao577/go-release-action@v1.19
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        goos: ${{ matrix.goos }}
-        goarch: ${{ matrix.goarch }}
-        binary_name: "pfsensecli"
-
       - name: Check out code into the Go module directory
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v2
 
