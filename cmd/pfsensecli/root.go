@@ -8,11 +8,6 @@ import (
 )
 
 var (
-	username string
-	password string
-)
-
-var (
 	pfsenseConfig = struct {
 		username string
 		password string

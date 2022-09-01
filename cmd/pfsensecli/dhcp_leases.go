@@ -22,10 +22,7 @@ var listDhcpLeasesCmd = &cobra.Command{
 		withExpired, _ := cmd.Flags().GetBool("withexpired")
 		if !withExpired {
 			leases = sliceFilter(leases, func(lease pfsenseapi.DHCPLease) bool {
-				if lease.State == "expired" {
-					return false
-				}
-				return true
+			        return lease.State != "expired"
 			})
 		}
 

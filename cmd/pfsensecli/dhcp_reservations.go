@@ -31,29 +31,6 @@ var listDHCPReservationsCmd = &cobra.Command{
 	},
 }
 
-// listDHCPReservationsCmd represents the listDHCPReservations command
-var createDHCPReservationsCmd = &cobra.Command{
-	Use:   "create-dhcp-reservations",
-	Short: "List DHCP reservations for the interface specified",
-	Args:  cobra.ExactArgs(1),
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx := context.Background()
-		client := getClientForUser(pfsenseConfig.host, pfsenseConfig.username, pfsenseConfig.password)
-		reservations, err := client.DHCP.ListStaticMappings(ctx, args[0])
-		if err != nil {
-			return err
-		}
-		if jsonOutput {
-			if err := printJson(reservations); err != nil {
-				return err
-			}
-			return nil
-		}
-		printReservationsTable(reservations)
-		return nil
-	},
-}
-
 func init() {
 	rootCmd.AddCommand(listDHCPReservationsCmd)
 }
