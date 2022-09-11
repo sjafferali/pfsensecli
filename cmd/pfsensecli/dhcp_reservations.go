@@ -35,7 +35,7 @@ func init() {
 	rootCmd.AddCommand(listDHCPReservationsCmd)
 }
 
-func printReservationsTable(reservations []pfsenseapi.DHCPStaticMapping) {
+func printReservationsTable(reservations []*pfsenseapi.DHCPStaticMapping) {
 	data := make([][]string, 0)
 	for _, i := range reservations {
 		data = append(
