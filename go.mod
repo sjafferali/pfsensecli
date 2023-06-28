@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/olekukonko/tablewriter v0.0.5
-	github.com/sjafferali/pfsense-api-goclient v0.1.3
+	github.com/sjafferali/pfsense-api-goclient v0.1.4
 	github.com/spf13/cobra v1.7.0
 )
 
