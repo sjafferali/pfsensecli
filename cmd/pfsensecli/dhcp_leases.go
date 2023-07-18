@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/sjafferali/pfsense-api-goclient/pfsenseapi"
 	"github.com/spf13/cobra"
@@ -54,7 +53,7 @@ func printLeasesTable(leases []*pfsenseapi.DHCPLease) {
 				i.If,
 				i.Type,
 				i.State,
-				strconv.FormatBool(i.Online),
+				i.Online,
 				i.Hostname,
 				i.Descr,
 			},
