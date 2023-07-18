@@ -54,7 +54,7 @@ func printLeasesTable(leases []*pfsenseapi.DHCPLease) {
 				i.If,
 				i.Type,
 				i.State,
-				strconv.FormatBool(i.Online),
+				i.Online,
 				i.Hostname,
 				i.Descr,
 			},
