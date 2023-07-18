@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/sjafferali/pfsense-api-goclient/pfsenseapi"
 	"github.com/spf13/cobra"
