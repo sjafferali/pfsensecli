@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/sjafferali/pfsense-api-goclient v0.2.0
-	github.com/spf13/cobra v1.7.0
+	github.com/spf13/cobra v1.8.0
 )
 
 require (
