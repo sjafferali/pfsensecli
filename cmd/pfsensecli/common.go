@@ -12,11 +12,12 @@ import (
 
 func getClientForUser(host, user, password string) *pfsenseapi.Client {
 	config := pfsenseapi.Config{
-		Host:     host,
-		User:     user,
-		Password: password,
-		SkipTLS:  true,
-		Timeout:  10 * time.Second,
+		Host:             host,
+		LocalAuthEnabled: true,
+		User:             user,
+		Password:         password,
+		SkipTLS:          true,
+		Timeout:          10 * time.Second,
 	}
 	return pfsenseapi.NewClient(config)
 }

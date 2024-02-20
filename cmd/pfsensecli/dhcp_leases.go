@@ -8,38 +8,46 @@ import (
 )
 
 // listDhcpLeasesCmd represents the listDhcpLeases command
-var listDhcpLeasesCmd = &cobra.Command{
-	Use:   "list-dhcp-leases",
-	Short: "List DHCP Leases",
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx := context.Background()
-		client := getClientForUser(pfsenseConfig.host, pfsenseConfig.username, pfsenseConfig.password)
-		leases, err := client.DHCP.ListLeases(ctx)
-		if err != nil {
-			return err
-		}
-		withExpired, _ := cmd.Flags().GetBool("withexpired")
-		if !withExpired {
-			leases = sliceFilter(leases, func(lease *pfsenseapi.DHCPLease) bool {
-				return lease.State != "expired"
-			})
-		}
+var (
+	dhcpLeasesCmd = &cobra.Command{
+		Use:   "dhcp-leases",
+		Short: "Commands associated with DHCP leases",
+	}
 
-		if jsonOutput {
-			if err := printJson(leases); err != nil {
+	listDhcpLeasesCmd = &cobra.Command{
+		Use:   "list",
+		Short: "List DHCP Leases",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx := context.Background()
+			client := getClientForUser(pfsenseConfig.host, pfsenseConfig.username, pfsenseConfig.password)
+			leases, err := client.DHCP.ListLeases(ctx)
+			if err != nil {
 				return err
 			}
-			return nil
-		}
+			withExpired, _ := cmd.Flags().GetBool("withexpired")
+			if !withExpired {
+				leases = sliceFilter(leases, func(lease *pfsenseapi.DHCPLease) bool {
+					return lease.State != "expired"
+				})
+			}
 
-		printLeasesTable(leases)
-		return nil
-	},
-}
+			if jsonOutput {
+				if err := printJson(leases); err != nil {
+					return err
+				}
+				return nil
+			}
+
+			printLeasesTable(leases)
+			return nil
+		},
+	}
+)
 
 func init() {
-	rootCmd.AddCommand(listDhcpLeasesCmd)
 	listDhcpLeasesCmd.Flags().Bool("withexpired", false, "show expired leases")
+	dhcpLeasesCmd.AddCommand(listDhcpLeasesCmd)
+	rootCmd.AddCommand(dhcpLeasesCmd)
 }
 
 func printLeasesTable(leases []*pfsenseapi.DHCPLease) {
