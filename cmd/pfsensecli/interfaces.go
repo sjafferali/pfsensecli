@@ -7,32 +7,39 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// listInterfacesCmd represents the list-interfaces command
-var listInterfacesCmd = &cobra.Command{
-	Use:   "list-interfaces",
-	Short: "List Interfaces",
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx := context.Background()
-		client := getClientForUser(pfsenseConfig.host, pfsenseConfig.username, pfsenseConfig.password)
-		interfaces, err := client.Interface.ListInterfaces(ctx)
-		if err != nil {
-			return err
-		}
+var (
+	interfaceCmd = &cobra.Command{
+		Use:   "interface",
+		Short: "Commands associated with interfaces",
+	}
 
-		if jsonOutput {
-			if err := printJson(interfaces); err != nil {
+	listInterfacesCmd = &cobra.Command{
+		Use:   "list",
+		Short: "List Interfaces",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx := context.Background()
+			client := getClientForUser(pfsenseConfig.host, pfsenseConfig.username, pfsenseConfig.password)
+			interfaces, err := client.Interface.ListInterfaces(ctx)
+			if err != nil {
 				return err
 			}
-			return nil
-		}
 
-		printInterfacesTable(interfaces)
-		return nil
-	},
-}
+			if jsonOutput {
+				if err := printJson(interfaces); err != nil {
+					return err
+				}
+				return nil
+			}
+
+			printInterfacesTable(interfaces)
+			return nil
+		},
+	}
+)
 
 func init() {
-	rootCmd.AddCommand(listInterfacesCmd)
+	interfaceCmd.AddCommand(listInterfacesCmd)
+	rootCmd.AddCommand(interfaceCmd)
 }
 
 func printInterfacesTable(interfaces []*pfsenseapi.Interface) {
