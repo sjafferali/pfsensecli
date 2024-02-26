@@ -43,7 +43,7 @@ jobs:
         run: echo BUILD_TIME=$(date -u +%Y%m%d-%H%M) >> ${GITHUB_ENV}
 
       - name: Go Release Binaries
-        uses: wangyoucao577/go-release-action@a4a9b2ed09837e8c8c59fcaeae64e5bba70d8d87 # v1.22
+        uses: wangyoucao577/go-release-action@b173bce0484dc9f34c585181e5db16bd8756a21e # v1.22
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: ${{ matrix.goos }}
